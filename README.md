@@ -1,1 +1,1 @@
-# whishlist-manager
+# wishlist-manager

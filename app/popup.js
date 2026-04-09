@@ -7,13 +7,19 @@ saveBtn.addEventListener("click", async () => {
 
   chrome.storage.local.get(["links"], (result) => {
     const links = result.links || [];
-    links.push({ url, date: new Date().toISOString() });
+    const duplicate = links.find(link => link.url === url);
 
-    chrome.storage.local.set({ links }, renderLinks);
+    if (duplicate) {
+      renderLinks(url);
+      return;
+    }
+
+    links.push({ url, date: new Date().toISOString() });
+    chrome.storage.local.set({ links }, () => renderLinks(url));
   });
 });
 
-function renderLinks() {
+function renderLinks(highlightUrl) {
   chrome.storage.local.get(["links"], (result) => {
     const links = result.links || [];
     linksList.innerHTML = "";
@@ -21,6 +27,19 @@ function renderLinks() {
     links.forEach(link => {
       const li = document.createElement("li");
       li.textContent = link.url;
+      if (highlightUrl && link.url === highlightUrl) {
+        li.classList.add("li-highlight");
+      }
+
+      const deleteBtn = document.createElement("button");
+      deleteBtn.textContent = "X";
+      deleteBtn.classList.add("delete-btn");
+      deleteBtn.addEventListener("click", () => {
+        const updated = links.filter(l => l.url !== link.url);
+        chrome.storage.local.set({ links: updated }, renderLinks);
+      });
+
+      li.appendChild(deleteBtn);
       linksList.appendChild(li);
     });
   });
