@@ -20,24 +20,38 @@ saveBtn.addEventListener("click", async () => {
 });
 
 function renderLinks(highlightUrl) {
+  function createSpan(link, index) {
+    const span = document.createElement("span");
+    span.textContent = `${index + 1}. ${link.url}`;
+    return span;
+  }
+
+  function createDeleteButton(links, link) {
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "X";
+    deleteBtn.classList.add("delete-btn");
+    deleteBtn.addEventListener("click", () => {
+      const updated = links.filter(l => l.url !== link.url);
+      chrome.storage.local.set({ links: updated }, renderLinks);
+    });
+
+    return deleteBtn;
+  }
+
   chrome.storage.local.get(["links"], (result) => {
     const links = result.links || [];
     linksList.innerHTML = "";
 
-    links.forEach(link => {
+    links.forEach((link, index) => {
       const li = document.createElement("li");
-      li.textContent = link.url;
+      const span = createSpan(link, index);
+
+      li.appendChild(span);
       if (highlightUrl && link.url === highlightUrl) {
         li.classList.add("li-highlight");
       }
 
-      const deleteBtn = document.createElement("button");
-      deleteBtn.textContent = "X";
-      deleteBtn.classList.add("delete-btn");
-      deleteBtn.addEventListener("click", () => {
-        const updated = links.filter(l => l.url !== link.url);
-        chrome.storage.local.set({ links: updated }, renderLinks);
-      });
+      const deleteBtn = createDeleteButton(links, link);
 
       li.appendChild(deleteBtn);
       linksList.appendChild(li);

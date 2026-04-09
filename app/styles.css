@@ -1,5 +1,8 @@
 body {
+    margin: 0;
+    padding: 8px;
     min-width: 150px;
+    max-width: 300px;
 }
 
 .save-btn-container {
@@ -9,27 +12,45 @@ body {
 }
 
 #linksList {
-    padding-inline-start: 20px;
-}
+    padding-inline-start: 5px;
+    width: 100%;
 
-.delete-btn {
-    margin-left: 8px;
-    border: none;
-    background: none;
-    cursor: pointer;
-    color: #999;
-    font-size: 10px;
-    padding: 0 2px;
-}
+    li {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        width: 100%;
 
-.delete-btn:hover {
-    color: #e74c3c;
-}
+        span {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex: 1;
+            min-width: 0;
+        }
+    }
 
-.li-highlight {
-    border-left: 3px solid #f0ad4e;
-    padding-left: 4px;
-    animation: blink-highlight 2s ease-in-out 3;
+    .delete-btn {
+        margin-left: 4px;
+        margin-right: 8px;
+        border: none;
+        background: none;
+        cursor: pointer;
+        color: #999;
+        font-size: 14px;
+        padding: 0 2px;
+    }
+
+    .delete-btn:hover {
+        color: #e74c3c;
+    }
+
+    .li-highlight {
+        border-left: 3px solid #f0ad4e;
+        padding-left: 4px;
+        animation: blink-highlight 2s ease-in-out 3;
+    }
 }
 
 @keyframes blink-highlight {
