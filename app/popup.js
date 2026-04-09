@@ -20,10 +20,12 @@ saveBtn.addEventListener("click", async () => {
 });
 
 function renderLinks(highlightUrl) {
-  function createSpan(link, index) {
-    const span = document.createElement("span");
-    span.textContent = `${index + 1}. ${link.url}`;
-    return span;
+  function createLink(link, index) {
+    const a = document.createElement("a");
+    a.href = link.url;
+    a.textContent = `${index + 1}. ${link.url}`;
+    a.target = "_blank";
+    return a;
   }
 
   function createDeleteButton(links, link) {
@@ -44,9 +46,9 @@ function renderLinks(highlightUrl) {
 
     links.forEach((link, index) => {
       const li = document.createElement("li");
-      const span = createSpan(link, index);
+      const a = createLink(link, index);
 
-      li.appendChild(span);
+      li.appendChild(a);
       if (highlightUrl && link.url === highlightUrl) {
         li.classList.add("li-highlight");
       }

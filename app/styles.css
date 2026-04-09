@@ -22,7 +22,7 @@ body {
         gap: 8px;
         width: 100%;
 
-        span {
+        a {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
