@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Whishlist Manager",
+  "version": "1.0",
+  "description": "Save current tab URL",
+  "permissions": ["storage", "tabs"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "assets/whishlist-icon.png"
+  },
+  "icons": {
+    "128": "assets/whishlist-icon.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
